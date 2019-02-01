@@ -41,8 +41,6 @@ public class Connection {
         }
 
 
-        throw new RuntimeException("not yet implemented");
-
     }
 
     public Message receive() {

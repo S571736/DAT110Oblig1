@@ -1,99 +1,94 @@
 package no.hvl.dat110.rpc;
 
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 public class RPCUtils {
 
-	public static byte[] marshallString(byte rpcid, String str) {
+    public static byte[] marshallString(byte rpcid, String str) {
 
-		byte[] encoded;
+        byte[] encoded = new byte[str.length() + 1];
 
-		// TODO: marshall RPC identifier and string into byte array
+        encoded[0] = rpcid;
+        for (int i = 0; i < str.length(); i++) {
+            encoded[i + 1] = (byte) str.charAt(i);
+        }
 
-		if (true) {
-			throw new RuntimeException("not yet implemented");
-		}
 
-		return encoded;
-	}
+        // TODO: marshall RPC identifier and string into byte array
 
-	public static String unmarshallString(byte[] data) {
 
-		String decoded;
+        return encoded;
+    }
 
-		// TODO: unmarshall String contained in data into decoded
+    public static String unmarshallString(byte[] data) {
 
-		if (true) {
-			throw new RuntimeException("not yet implemented");
-		}
+        String decoded = new String(Arrays.copyOfRange(data, 1, data.length));
 
-		return decoded;
-	}
 
-	public static byte[] marshallVoid(byte rpcid) {
+        // TODO: unmarshall String contained in data into decoded
 
-		byte[] encoded;
 
-		// TODO: marshall RPC identifier in case of void type
+        return decoded;
+    }
 
-		if (true) {
-			throw new RuntimeException("not yet implemented");
-		}
+    public static byte[] marshallVoid(byte rpcid) {
 
-		return encoded;
+        byte[] encoded = new byte[1];
 
-	}
+        encoded[0] = rpcid;
 
-	public static void unmarshallVoid(byte[] data) {
+        // TODO: marshall RPC identifier in case of void type
 
-		// TODO: unmarshall void type
-	}
+        return encoded;
 
-	public static byte[] marshallBoolean(byte rpcid, boolean b) {
+    }
 
-		byte[] encoded = new byte[2];
+    public static void unmarshallVoid(byte[] data) {
+        return;
+        // TODO: unmarshall void type
+    }
 
-		encoded[0] = rpcid;
+    public static byte[] marshallBoolean(byte rpcid, boolean b) {
 
-		if (b) {
-			encoded[1] = 1;
-		} else {
-			encoded[1] = 0;
-		}
+        byte[] encoded = new byte[2];
 
-		return encoded;
-	}
+        encoded[0] = rpcid;
 
-	public static boolean unmarshallBoolean(byte[] data) {
+        if (b) {
+            encoded[1] = 1;
+        } else {
+            encoded[1] = 0;
+        }
 
-		return (data[1] > 0);
+        return encoded;
+    }
 
-	}
+    public static boolean unmarshallBoolean(byte[] data) {
 
-	public static byte[] marshallInteger(byte rpcid, int x) {
+        return (data[1] > 0);
 
-		byte[] encoded;
+    }
 
-		// TODO: marshall RPC identifier and string into byte array
+    public static byte[] marshallInteger(byte rpcid, int x) {
 
-		if (true) {
-			throw new RuntimeException("not yet implemented");
-		}
+        byte[] encoded = new byte[4];
+        encoded = ByteBuffer.allocate(4).putInt(x).array();
+        return encoded;
 
-		return encoded;
-	}
 
-	public static int unmarshallInteger(byte[] data) {
+        // TODO: marshall RPC identifier and string into byte array
 
-		int decoded;
+    }
 
-		// TODO: unmarshall integer contained in data
+    public static int unmarshallInteger(byte[] data) {
 
-		if (true) {
-			throw new RuntimeException("not yet implemented");
-		}
+        int decoded;
 
-		return decoded;
+        // TODO: unmarshall integer contained in data
+        decoded = ByteBuffer.wrap(data).getInt();
 
-	}
+        return decoded;
+
+    }
 }
