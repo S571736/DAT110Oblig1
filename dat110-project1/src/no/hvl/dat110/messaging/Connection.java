@@ -7,65 +7,80 @@ import java.net.Socket;
 
 public class Connection {
 
-	private DataOutputStream outStream; // for writing bytes to the TCP connection
-	private DataInputStream inStream; // for reading bytes from the TCP connection
-	private Socket socket; // socket for the underlying TCP connection
+    private DataOutputStream outStream; // for writing bytes to the TCP connection
+    private DataInputStream inStream; // for reading bytes from the TCP connection
+    private Socket socket; // socket for the underlying TCP connection
 
-	public Connection(Socket socket) {
+    public Connection(Socket socket) {
 
-		try {
+        try {
 
-			this.socket = socket;
+            this.socket = socket;
 
-			outStream = new DataOutputStream(socket.getOutputStream());
+            outStream = new DataOutputStream(socket.getOutputStream());
 
-			inStream = new DataInputStream(socket.getInputStream());
+            inStream = new DataInputStream(socket.getInputStream());
 
-		} catch (IOException ex) {
+        } catch (IOException ex) {
 
-			System.out.println("Connection: " + ex.getMessage());
-			ex.printStackTrace();
-		}
-	}
+            System.out.println("Connection: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
 
-	public void send(Message message) {
+    public void send(Message message) {
 
-		// TODO
-		// encapsulate the data contained in the message and write to the output stream
+        // TODO
+        // encapsulate the data contained in the message and write to the output stream
+        try {
 
-		throw new RuntimeException("not yet implemented");
+            outStream.write(message.encapsulate(), 0, 128);
 
-	}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	public Message receive() {
 
-		Message message;
-		byte[] recvbuf;
+        throw new RuntimeException("not yet implemented");
 
-		// TODO
-		// read a segment from the input stream and decapsulate into message
+    }
 
-		if (true) {
-			throw new RuntimeException("not yet implemented");
-		}
+    public Message receive() {
 
-		return message;
+        Message message;
+        byte[] recvbuf;
 
-	}
+        // TODO
+        // read a segment from the input stream and decapsulate into message
 
-	// close the connection by closing streams and the underlying socket
-	public void close() {
+        recvbuf = new byte[128];
 
-		try {
+        try {
+            inStream.read(recvbuf, 0, 128);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-			outStream.close();
-			inStream.close();
+        message = new Message();
+        message.decapsulate(recvbuf);
 
-			socket.close();
-		} catch (IOException ex) {
+        return message;
 
-			System.out.println("Connection: " + ex.getMessage());
-			ex.printStackTrace();
-		}
-	}
+    }
+
+    // close the connection by closing streams and the underlying socket
+    public void close() {
+
+        try {
+
+            outStream.close();
+            inStream.close();
+
+            socket.close();
+        } catch (IOException ex) {
+
+            System.out.println("Connection: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
 }
