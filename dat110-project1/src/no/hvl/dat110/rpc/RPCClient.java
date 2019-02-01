@@ -1,6 +1,7 @@
 package no.hvl.dat110.rpc;
 
 import no.hvl.dat110.messaging.Connection;
+import no.hvl.dat110.messaging.Message;
 import no.hvl.dat110.messaging.MessagingClient;
 
 public class RPCClient {
@@ -35,7 +36,11 @@ public class RPCClient {
     public byte[] call(byte[] rpcrequest) {
 
         byte[] rpcreply;
-		
+        rpcrequest = RPCUtils.marshallVoid(rpcrequest[0]);
+        connection.send(new Message(rpcrequest));
+        rpcreply = connection.receive().getData();
+        RPCUtils.unmarshallVoid(rpcreply);
+
 		/* TODO: 
 		
 		Make a remote call on the RPC server by sending a request message
@@ -45,10 +50,6 @@ public class RPCClient {
 		rpctreply is the rpcreply to be unmarshalled by the client-stub
 		
 		*/
-        
-        if (true) {
-            throw new RuntimeException("not yet implemented");
-        }
 
         return rpcreply;
 
