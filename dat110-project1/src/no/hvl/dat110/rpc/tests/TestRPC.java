@@ -1,12 +1,11 @@
 package no.hvl.dat110.rpc.tests;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Test;
-
 import no.hvl.dat110.rpc.RPCClient;
 import no.hvl.dat110.rpc.RPCServer;
 import no.hvl.dat110.rpc.RPCServerStopStub;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestRPC {
 

@@ -7,11 +7,13 @@ public class RPCUtils {
 
     public static byte[] marshallString(byte rpcid, String str) {
 
-        byte[] encoded = new byte[str.length() + 1];
+        byte[] help = str.getBytes();
+        byte[] encoded = new byte[help.length + 1];
 
         encoded[0] = rpcid;
-        for (int i = 0; i < str.length(); i++) {
-            encoded[i + 1] = (byte) str.charAt(i);
+
+        for (int i = 0; i < help.length; i++) {
+            encoded[i + 1] = help[i];
         }
 
 
@@ -22,8 +24,8 @@ public class RPCUtils {
     }
 
     public static String unmarshallString(byte[] data) {
-
-        String decoded = new String(Arrays.copyOfRange(data, 1, data.length));
+        byte[] help = Arrays.copyOfRange(data, 1, data.length);
+        String decoded = new String(help);
 
 
         // TODO: unmarshall String contained in data into decoded
