@@ -28,7 +28,7 @@ public class RPCClient {
     public void disconnect() {
 
         // TODO: disconnect/close the underlying messaging connection
-        msgclient.connect().close();
+        msgclient.disconnect();
 
 
     }
@@ -36,10 +36,10 @@ public class RPCClient {
     public byte[] call(byte[] rpcrequest) {
 
         byte[] rpcreply;
-        rpcrequest = RPCUtils.marshallVoid(rpcrequest[0]);
+
         connection.send(new Message(rpcrequest));
         rpcreply = connection.receive().getData();
-        RPCUtils.unmarshallVoid(rpcreply);
+
 
 		/* TODO: 
 		

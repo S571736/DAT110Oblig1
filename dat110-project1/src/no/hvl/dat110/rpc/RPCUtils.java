@@ -74,8 +74,13 @@ public class RPCUtils {
 
     public static byte[] marshallInteger(byte rpcid, int x) {
 
-        byte[] encoded = new byte[4];
-        encoded = ByteBuffer.allocate(4).putInt(x).array();
+        byte[] encoded = new byte[5];
+
+        encoded[0] = rpcid;
+
+        byte[] help = ByteBuffer.allocate(4).putInt(x).array();
+        System.arraycopy(help, 0, encoded, 1, help.length);
+
         return encoded;
 
 
@@ -86,9 +91,11 @@ public class RPCUtils {
     public static int unmarshallInteger(byte[] data) {
 
         int decoded;
-
+        byte[] help = Arrays.copyOfRange(data, 1, data.length);
         // TODO: unmarshall integer contained in data
-        decoded = ByteBuffer.wrap(data).getInt();
+
+
+        decoded = ByteBuffer.wrap(help).getInt();
 
         return decoded;
 

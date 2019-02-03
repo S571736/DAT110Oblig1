@@ -98,8 +98,8 @@ public class TestRPC {
 				voidvoidstub.m();
 
 				assertTrue(true); // just check that we complete call
-				stopstub.stop();
 
+				stopstub.stop();
 				client.disconnect();
 
 			}

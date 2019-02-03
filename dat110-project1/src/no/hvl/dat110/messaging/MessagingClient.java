@@ -7,6 +7,7 @@ public class MessagingClient {
 
     private String server;
     private int port;
+    private Connection connection;
 
     public MessagingClient(String server, int port) {
         this.server = server;
@@ -17,19 +18,24 @@ public class MessagingClient {
     public Connection connect() {
 
         Socket clientSocket;
-        Connection connection = null;
+        this.connection = null;
 
         // TODO
         // create TCP socket for client and connection
 
         try {
             clientSocket = new Socket(server, port);
-            connection = new Connection(clientSocket);
+            this.connection = new Connection(clientSocket);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
-        return connection;
+        return this.connection;
+    }
+
+    public void disconnect(){
+        this.connection.close();
+        this.connection = null;
     }
 }
