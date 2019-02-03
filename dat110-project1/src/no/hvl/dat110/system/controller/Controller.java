@@ -2,6 +2,7 @@ package no.hvl.dat110.system.controller;
 
 import no.hvl.dat110.rpc.RPCClient;
 import no.hvl.dat110.rpc.RPCServerStopStub;
+import no.hvl.dat110.system.display.DisplayDevice;
 
 public class Controller  {
 	
@@ -21,7 +22,13 @@ public class Controller  {
 		
 		displayclient = new RPCClient(Common.DISPLAYHOST,Common.DISPLAYPORT);
 		sensorclient = new RPCClient(Common.SENSORHOST,Common.SENSORPORT);
-		
+
+
+		display = new Display();
+		sensor = new Sensor();
+
+
+
 		// TODO
 		// create display and sensor object
 		// create RPC clients for display device and sensor device

@@ -10,9 +10,12 @@ public class DisplayImpl implements RPCImpl {
 	}
 	
 	public byte[] invoke(byte[] request) {
-		
+
+
 		byte[] reply;
-		byte rpcid;
+		byte rpcid = request[0];
+
+
 		
 		// TODO: 
 		// implement unmarshalling, call, and marshall for write RPC method
