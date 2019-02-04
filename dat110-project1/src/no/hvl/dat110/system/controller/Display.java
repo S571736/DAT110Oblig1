@@ -13,9 +13,9 @@ public class Display extends RPCStub {
 
 		String temperature = RPCUtils.unmarshallString(reply);
 
-		System.out.println("Temperature: " + temperature);
+		System.out.println("" + temperature);
 
-		// TODO
+
 		// implement marshalling, call and unmarshalling for write RPC method
 
 		//throw new RuntimeException("not yet implemented");
