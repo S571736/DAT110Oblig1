@@ -47,7 +47,7 @@ public class Controller  {
 		displayclient.register(stopdisplay);
 		sensorclient.register(stopsensor);
 
-		for (int i = 0; i<10; i++){
+		for (int i = 0; i < N; i++){
 			display.write("Temperatur: " + sensor.read());
 			try{
 				Thread.sleep(1000);
