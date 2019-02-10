@@ -3,9 +3,18 @@ package no.hvl.dat110.messaging;
 public class Message {
 
     private byte[] payload;
+    public int segmentSize = MessageConfig.SEGMENTSIZE;
 
     public Message(byte[] payload) {
         this.payload = payload; // TODO: check for length within boundary
+
+        if (payload.length + 1 > segmentSize) {
+            try {
+                throw new Exception("Payload to big for Message, split it");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public Message() {
@@ -18,7 +27,7 @@ public class Message {
 
     public byte[] encapsulate() {
 
-        byte[] encoded = new byte[128];
+        byte[] encoded = new byte[segmentSize];
 
         encoded[0] = (byte) payload.length;
 

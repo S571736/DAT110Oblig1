@@ -47,13 +47,12 @@ public class RPCServer {
             // - lookup the methods to be invoked
             // - invoke the method
             // - send back message containing RPC reply
-            RPCImpl impl;
-            impl = services.get(rpcid);
 
-            byte[] reply = impl.invoke(request);
+
+            RPCImpl impl = services.get(rpcid);
+            byte[] reply = (impl != null) ? impl.invoke(request) : new byte[0];
 
             Message replymsg = new Message(reply);
-
             connection.send(replymsg);
 
             if (rpcid == RPCCommon.RPIDSTOP) {

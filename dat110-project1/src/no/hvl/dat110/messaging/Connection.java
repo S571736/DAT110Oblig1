@@ -11,6 +11,8 @@ public class Connection {
     private DataInputStream inStream; // for reading bytes from the TCP connection
     private Socket socket; // socket for the underlying TCP connection
 
+    public int segmentSize = MessageConfig.SEGMENTSIZE;
+
     public Connection(Socket socket) {
 
         try {
@@ -34,7 +36,7 @@ public class Connection {
         // encapsulate the data contained in the message and write to the output stream
         try {
 
-            outStream.write(message.encapsulate(), 0, 128);
+            outStream.write(message.encapsulate(), 0, segmentSize);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -46,15 +48,15 @@ public class Connection {
     public Message receive() {
 
         Message message;
-        byte[] recvbuf;
+        byte[] recvbuf = new byte[segmentSize];
 
         // TODO
         // read a segment from the input stream and decapsulate into message
 
-        recvbuf = new byte[128];
+
 
         try {
-            inStream.read(recvbuf, 0, 128);
+            inStream.read(recvbuf, 0, segmentSize);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,8 +75,8 @@ public class Connection {
 
             outStream.close();
             inStream.close();
-
             socket.close();
+
         } catch (IOException ex) {
 
             System.out.println("Connection: " + ex.getMessage());
